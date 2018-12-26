@@ -50,7 +50,6 @@ export class EasierAbstractLevelDOWN<
   }
 
   _get(key: StringOrBuffer, options: AbstractGetOptions, callback: ErrorValueCallback<V>) {
-    console.log('get', key)
     this._db.get(
       this._decodeKey(key)
     ).then((value: V) => {
@@ -64,7 +63,6 @@ export class EasierAbstractLevelDOWN<
   }
 
   _put(key: StringOrBuffer, val: StringOrBuffer, options: AbstractOptions, callback: ErrorCallback) {
-    console.log('put', key, val)
     this._db.put(
       this._decodeKey(key),
       this._decodeValue(val)
@@ -76,7 +74,6 @@ export class EasierAbstractLevelDOWN<
   }
 
   _del(key: StringOrBuffer, options: AbstractOptions, callback: ErrorCallback) {
-    console.log('del', key)
     this._db.del(
       this._decodeKey(key)
     ).then(() => {
