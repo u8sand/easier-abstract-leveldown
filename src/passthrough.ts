@@ -15,7 +15,7 @@ export function easier_changes_passthrough<
   const wrapper_instance = some_wrapper_instance as any as E
 
   // try to find the underlying db
-  const db = underlying_easier_db || wrapper_instance._db || wrapper_instance.db
+  const db = underlying_easier_db || wrapper_instance.db || wrapper_instance._db
 
   // can't find it, return it the way it is
   if (db === undefined) {
@@ -23,8 +23,12 @@ export function easier_changes_passthrough<
     return wrapper_instance
   }
 
-  // we have the db, add changes to the instance
-  wrapper_instance.changes = db.changes.bind(db)
+  // changes doesn't exist on the underlying db
+  if (db.changes === undefined) {
+    console.warn('easier-abstract-leveldown.passthrough_changes: underlying db does not have changes')
+    return wrapper_instance
+  }
 
+  wrapper_instance.changes = db.changes.bind(db)
   return wrapper_instance
 }
