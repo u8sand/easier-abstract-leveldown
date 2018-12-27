@@ -1,4 +1,5 @@
 import { KeyVal, StringOrBuffer } from './types'
+import { EventEmitter } from 'events';
 
 export type MaybeLocation = { location?: string }
 
@@ -16,10 +17,26 @@ export type EasierLevelDOWNIteratorOpts<K, V> = {
   limit?: number
 }
 
-export interface EasierLevelDOWNEventEmitter<K, V> {
-  onPut(cb: (key: K, value: V) => void): this
-  onDel(cb: (key: K) => void): this
-  onBatch(cb: (array: EasierLevelDOWNBatchOpts<K, V>) => void): this
+export class EasierLevelUpEmitter<K, V> extends EventEmitter {
+  emitPut(key: K, value: V) {
+    return this.emit('put', key, value)
+  }
+  emitDel(key: K) {
+    return this.emit('del', key)
+  }
+  emitBatch(array: EasierLevelDOWNBatchOpts<K, V>) {
+    return this.emit('batch', array)
+  }
+
+  onPut(cb: (key: K, value: V) => void) {
+    return this.on('put', cb)
+  }
+  onDel(cb: (key: K) => void) {
+    return this.on('del', cb)
+  }
+  onBatch(cb: (array: EasierLevelDOWNBatchOpts<K, V>) => void) {
+    return this.on('batch', cb)
+  }
 }
 
 export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
@@ -36,7 +53,7 @@ export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
   del(k: K): Promise<void>
 
   // Watch remote changes if applicable (only works with exposeLevelUP)
-  changes?(): EasierLevelDOWNEventEmitter<K, V>
+  changes?(): EasierLevelUpEmitter<K, V>
 
   // Iteration via generator
   iterator(opts: EasierLevelDOWNIteratorOpts<K, V>): AsyncIterableIterator<KeyVal<K, V>>
