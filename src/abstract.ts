@@ -19,6 +19,17 @@ export type EasierLevelDOWNIteratorOpts<K, V> = {
 }
 
 export class EasierLevelDOWNEmitter<K, V> extends EventEmitter {
+  constructor() {
+    super()
+
+    this.emitPut = this.emitPut.bind(this)
+    this.emitDel = this.emitDel.bind(this)
+    this.emitBatch = this.emitBatch.bind(this)
+    this.onPut = this.onPut.bind(this)
+    this.onDel = this.onDel.bind(this)
+    this.onBatch = this.onBatch.bind(this)
+  }
+
   emitPut(key: K, value: V) {
     return this.emit('put', key, value)
   }
