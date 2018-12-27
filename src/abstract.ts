@@ -16,6 +16,12 @@ export type EasierLevelDOWNIteratorOpts<K, V> = {
   limit?: number
 }
 
+export interface EasierLevelDOWNEventEmitter<K, V> {
+  onPut(cb: (key: K, value: V) => void): this
+  onDel(cb: (key: K) => void): this
+  onBatch(cb: (array: EasierLevelDOWNBatchOpts<K, V>) => void): this
+}
+
 export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
   // Optional open handling
   open?(opts: O): Promise<void>
@@ -28,6 +34,9 @@ export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
   put(k: K, v: V): Promise<void>
   // Delete a given document by key
   del(k: K): Promise<void>
+
+  // Watch remote changes if applicable (only works with exposeLevelUP)
+  changes?(): EasierLevelDOWNEventEmitter<K, V>
 
   // Iteration via generator
   iterator(opts: EasierLevelDOWNIteratorOpts<K, V>): AsyncIterableIterator<KeyVal<K, V>>

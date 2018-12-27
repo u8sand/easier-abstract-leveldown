@@ -1,6 +1,6 @@
 {
   "name": "easier-abstract-leveldown",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An easier abstract leveldown",
   "author": "Daniel J. B. Clarke <u8sand@gmail.com>",
   "license": "MIT",
@@ -20,6 +20,9 @@
     "compile": "tsc",
     "prepublishOnly": "npm run compile && npm test",
     "test": "tape -r ts-node/register src/**/*.test.ts"
+  },
+  "optionalDependencies": {
+    "levelup": "^4.0.0"
   },
   "dependencies": {
     "abstract-leveldown": "^6.0.0",
