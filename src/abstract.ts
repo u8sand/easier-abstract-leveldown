@@ -8,6 +8,7 @@ export type EasierLevelDOWNBatchOpts<K, V> = ReadonlyArray<{
 } | {
   type: 'del', key: K
 }>
+
 export type EasierLevelDOWNIteratorOpts<K, V> = {
   gt?: K
   gte?: K
@@ -17,7 +18,7 @@ export type EasierLevelDOWNIteratorOpts<K, V> = {
   limit?: number
 }
 
-export class EasierLevelUpEmitter<K, V> extends EventEmitter {
+export class EasierLevelDOWNEmitter<K, V> extends EventEmitter {
   emitPut(key: K, value: V) {
     return this.emit('put', key, value)
   }
@@ -52,8 +53,8 @@ export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
   // Delete a given document by key
   del(k: K): Promise<void>
 
-  // Watch remote changes if applicable (only works with exposeLevelUP)
-  changes?(): EasierLevelUpEmitter<K, V>
+  // Watch remote changes if applicable supports EasierAbstractLevelDOWNs
+  changes?(): EasierLevelDOWNEmitter<K, V>
 
   // Iteration via generator
   iterator(opts: EasierLevelDOWNIteratorOpts<K, V>): AsyncIterableIterator<KeyVal<K, V>>

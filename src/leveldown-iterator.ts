@@ -1,8 +1,8 @@
 import { AbstractIterator, AbstractIteratorOptions, ErrorCallback, ErrorKeyValueCallback } from 'abstract-leveldown'
-import { normalize_options, test_from_options } from './level-down-opts'
-import { EasierAbstractLevelDOWN } from './level-down';
+import { EasierLevelDOWNIteratorOpts, MaybeLocation } from './abstract'
+import { EasierAbstractLevelDOWN } from './leveldown'
+import { normalize_options, test_from_options } from './leveldown-opts'
 import { KeyVal, StringOrBuffer } from './types'
-import { MaybeLocation, EasierLevelDOWNIteratorOpts } from './abstract';
 
 export class EasierAbstractLevelDOWNIterator<
   K, V, O extends MaybeLocation

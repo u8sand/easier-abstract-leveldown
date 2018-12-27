@@ -1,7 +1,8 @@
-import { AbstractLevelDOWN, AbstractGetOptions, AbstractOptions, ErrorCallback, ErrorValueCallback, AbstractIteratorOptions, AbstractIterator, AbstractBatch, AbstractChainedBatch, ErrorKeyValueCallback } from 'abstract-leveldown'
-import { EasierLevelDOWN, MaybeLocation, EasierLevelDOWNBatchOpts } from './abstract';
-import { EasierAbstractLevelDOWNIterator } from './level-down-iterator'
-import { StringOrBuffer } from './types';
+import { AbstractGetOptions, AbstractIterator, AbstractIteratorOptions, AbstractLevelDOWN, AbstractOptions, ErrorCallback, ErrorValueCallback } from 'abstract-leveldown'
+import { EasierLevelDOWN, EasierLevelDOWNBatchOpts, MaybeLocation, EasierLevelDOWNEmitter } from './abstract'
+import { EasierAbstractLevelDOWNIterator } from './leveldown-iterator'
+import { StringOrBuffer } from './types'
+import { EventEmitter } from 'events';
 
 export class EasierAbstractLevelDOWN<
   K, V, O extends MaybeLocation
@@ -141,6 +142,45 @@ export class EasierAbstractLevelDOWN<
 
   _iterator(options: AbstractIteratorOptions<K>): AbstractIterator<StringOrBuffer, StringOrBuffer> {
     return new EasierAbstractLevelDOWNIterator<K, V, O>(this, options)
+  }
+
+  // Passthrough changes encoding underlying events
+  changes(): EasierLevelDOWNEmitter<StringOrBuffer, StringOrBuffer> {
+    const newEmitter = new EasierLevelDOWNEmitter<StringOrBuffer, StringOrBuffer>()
+
+    this._db.changes().onPut(
+      (key: K, value: V) =>
+        newEmitter.emitPut(
+          this._encodeKey(key),
+          this._encodeValue(value)
+        )
+    ).onDel(
+      (key: K) =>
+        newEmitter.emitDel(
+          this._encodeKey(key)
+        )
+    ).onBatch(
+      (array: EasierLevelDOWNBatchOpts<K, V>) =>
+        newEmitter.emitBatch(
+          array.map((op) => {
+            if (op.type === 'put') {
+              return {
+                type: op.type,
+                key: this._encodeKey(op.key),
+                value: this._encodeValue(op.value)
+              }
+            } else if (op.type === 'del') {
+              return {
+                type: op.type,
+                key: this._encodeKey(op.key)
+              }
+            } else
+              throw new Error(`Unrecognized batch operation '${(op as { type: string }).type}'`)
+          })
+        )
+    )
+
+    return newEmitter
   }
 
   _encodeKey(key: K): StringOrBuffer {

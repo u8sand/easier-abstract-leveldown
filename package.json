@@ -1,6 +1,6 @@
 {
   "name": "easier-abstract-leveldown",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An easier abstract leveldown",
   "author": "Daniel J. B. Clarke <u8sand@gmail.com>",
   "license": "MIT",
@@ -21,9 +21,6 @@
     "prepublishOnly": "npm run compile && npm test",
     "test": "tape -r ts-node/register src/**/*.test.ts"
   },
-  "optionalDependencies": {
-    "levelup": "^4.0.0"
-  },
   "dependencies": {
     "abstract-leveldown": "^6.0.0",
     "level-codec": "^9.0.0",
@@ -32,7 +29,6 @@
   "devDependencies": {
     "@types/abstract-leveldown": "^5.0.1",
     "@types/level-codec": "^9.0.0",
-    "@types/levelup": "^3.1.0",
     "@types/node": "^10.12.18",
     "humble-localstorage": "^2.0.0",
     "tape": "^4.9.1",

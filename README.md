@@ -12,7 +12,7 @@ Things are made as straightforward as possible, anything non-integral can be omm
   and if their conversion to StringOrBuffer is non-trivial, you can set up encode/decode key/val functions.
 - `easier`-derived leveldowns pass the same traditional leveldown tests
 - All methods expect standard promises to enable `async/await` features
-- Support passing events on to level-up via `exposeLevelUp` with optional dependency `levelup`
+- Support treating LevelDOWN as event emitter
 
 ## Example
 This is how easy it is to make a fully featured memdown. It could be more efficient, or not!
