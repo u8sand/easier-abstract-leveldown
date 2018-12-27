@@ -24,7 +24,7 @@ export function easier_changes_passthrough<
   }
 
   // we have the db, add changes to the instance
-  wrapper_instance.changes = db.changes()
+  wrapper_instance.changes = db.changes.bind(db)
 
   return wrapper_instance
 }
