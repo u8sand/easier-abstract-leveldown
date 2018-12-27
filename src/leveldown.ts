@@ -2,7 +2,6 @@ import { AbstractGetOptions, AbstractIterator, AbstractIteratorOptions, Abstract
 import { EasierLevelDOWN, EasierLevelDOWNBatchOpts, MaybeLocation, EasierLevelDOWNEmitter } from './abstract'
 import { EasierAbstractLevelDOWNIterator } from './leveldown-iterator'
 import { StringOrBuffer } from './types'
-import { EventEmitter } from 'events';
 
 export class EasierAbstractLevelDOWN<
   K, V, O extends MaybeLocation
