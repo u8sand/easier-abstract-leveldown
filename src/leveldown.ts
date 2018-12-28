@@ -1,5 +1,6 @@
 import { AbstractGetOptions, AbstractIterator, AbstractIteratorOptions, AbstractLevelDOWN, AbstractOptions, ErrorCallback, ErrorValueCallback } from 'abstract-leveldown'
-import { EasierLevelDOWN, EasierLevelDOWNBatchOpts, MaybeLocation, EasierLevelDOWNEmitter } from './abstract'
+import uuidv4 from 'uuid/v4'
+import { EasierLevelDOWN, EasierLevelDOWNBatchOpts, EasierLevelDOWNEmitter, MaybeLocation } from './abstract'
 import { EasierAbstractLevelDOWNIterator } from './leveldown-iterator'
 import { StringOrBuffer } from './types'
 
@@ -141,6 +142,22 @@ export class EasierAbstractLevelDOWN<
 
   _iterator(options: AbstractIteratorOptions<K>): AbstractIterator<StringOrBuffer, StringOrBuffer> {
     return new EasierAbstractLevelDOWNIterator<K, V, O>(this, options)
+  }
+
+  // generate key
+  post(val: StringOrBuffer): Promise<StringOrBuffer> {
+    if(this._db.post !== undefined) {
+      return this._db.post(
+        this._decodeValue(val)
+      ).then((key) => this._encodeKey(key))
+    } else {
+      const key = String(uuidv4())
+
+      return this._db.put(
+        this._decodeKey(key),
+        this._decodeValue(val)
+      ).then(() => key)
+    }
   }
 
   // Passthrough changes encoding underlying events

@@ -1,6 +1,6 @@
 {
   "name": "easier-abstract-leveldown",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "An easier abstract leveldown",
   "author": "Daniel J. B. Clarke <u8sand@gmail.com>",
   "license": "MIT",
@@ -22,9 +22,11 @@
     "test": "tape -r ts-node/register src/**/*.test.ts"
   },
   "dependencies": {
+    "@types/uuid": "^3.4.4",
     "abstract-leveldown": "^6.0.0",
     "level-codec": "^9.0.0",
-    "ltgt": "^2.2.1"
+    "ltgt": "^2.2.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/abstract-leveldown": "^5.0.1",

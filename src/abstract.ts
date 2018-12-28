@@ -52,10 +52,7 @@ export class EasierLevelDOWNEmitter<K, V> extends EventEmitter {
 }
 
 export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
-  // Optional open handling
-  open?(opts: O): Promise<void>
-  // Optional close handling
-  close?(): Promise<void>
+  // Public members (exposed by levelup and leveldown)
 
   // Get the value of a document given its key
   get(k: K): Promise<V>
@@ -64,14 +61,21 @@ export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
   // Delete a given document by key
   del(k: K): Promise<void>
 
-  // Watch remote changes if applicable supports EasierAbstractLevelDOWNs
-  changes?(): EasierLevelDOWNEmitter<K, V>
+
+  // Protected members (exposed by leveldown but not directly by levelup)
+
+  // Optional open handling
+  open?(opts: O): Promise<void>
+  // Optional close handling
+  close?(): Promise<void>
 
   // Iteration via generator
   iterator(opts: EasierLevelDOWNIteratorOpts<K, V>): AsyncIterableIterator<KeyVal<K, V>>
-
   // Optional batch processing
   batch?(opts: EasierLevelDOWNBatchOpts<K, V>): Promise<void>
+
+
+  // Private members (not exposed via either levelup or leveldown)
 
   // Encode internal representations if not string or buffer
   encodeKey?(key: K): StringOrBuffer
@@ -80,4 +84,13 @@ export interface EasierLevelDOWN<K, V = any, O extends MaybeLocation = any> {
   // Decode internal representations if not string or buffer
   decodeKey?(key: StringOrBuffer): K
   decodeValue?(value: StringOrBuffer): V
+
+
+  // Extended features (not exposed through native levelup)
+
+  // Create a given document and let the underlying store generate the key
+  post?(v: V): Promise<K>
+
+  // Watch remote changes if applicable supports EasierAbstractLevelDOWNs
+  changes?(): EasierLevelDOWNEmitter<K, V>
 }
