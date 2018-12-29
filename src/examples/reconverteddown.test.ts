@@ -1,9 +1,9 @@
 import test from 'tape'
-import simpledown from './simpledown'
+import reconverteddown from './reconverteddown'
 
 const testCommon = require('abstract-leveldown/test/common')({
   test: test,
-  factory: () => simpledown() as any,
+  factory: () => reconverteddown() as any,
   snapshots: false,
   createIfMissing: false,
   errorIfExists: false,

@@ -35,4 +35,4 @@ class MyLevelDOWN implements EasierLevelDOWN<string, string> {
   }
 }
 
-export default expose(MyLevelDOWN)
+export default expose(() => new MyLevelDOWN())

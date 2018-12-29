@@ -1,6 +1,11 @@
 # easier-abstract-leveldown
 A convenient wrapper of Abstract LevelDOWN for those who like TypeScript / ESnext features including async/await/generators.
 
+## Breaking Changes
+`^1.1.0`:
+  - `expose` now takes a factory function
+    - `Cls` -> `() => new Cls()`
+
 ## Discussion
 Things are made as straightforward as possible, anything non-integral can be ommitted and will be taken care of.
 - batch operations automatically get mapped to just calling each operation in a loop
@@ -13,6 +18,7 @@ Things are made as straightforward as possible, anything non-integral can be omm
 - `easier`-derived leveldowns pass the same traditional leveldown tests
 - All methods expect standard promises to enable `async/await` features
 - Support treating LevelDOWN as event emitter
+- Support treating any current Abstract LevelDOWN provider as an EasierLevelDOWN!
 
 ## Example
 This is how easy it is to make a fully featured memdown. It could be more efficient, or not!
@@ -55,5 +61,5 @@ class MyLevelDOWN implements EasierLevelDOWN<string, string> {
   }
 }
 
-export default expose(MyLevelDOWN)
+export default expose(() => new MyLevelDOWN())
 ```

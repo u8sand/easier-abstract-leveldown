@@ -1,6 +1,6 @@
 {
   "name": "easier-abstract-leveldown",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "An easier abstract leveldown",
   "author": "Daniel J. B. Clarke <u8sand@gmail.com>",
   "license": "MIT",
@@ -29,7 +29,9 @@
   },
   "devDependencies": {
     "@types/abstract-leveldown": "^5.0.1",
+    "@types/memdown": "^3.0.0",
     "@types/node": "^10.12.18",
+    "memdown": "^3.0.0",
     "tape": "^4.9.1",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.0",
