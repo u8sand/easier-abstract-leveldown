@@ -22,12 +22,12 @@ export class EasierAbstractLevelDOWNIterator<
     this._options = normalize_options(options)
     this._test = test_from_options(this._options)
     this._done = 0
-    this._iterator = this.db._db.iterator({
+    this._iterator = this.db._easier.iterator({
       ...this._options,
-      lt: this.db._decodeKey(options.lt),
-      lte: this.db._decodeKey(options.lte),
-      gt: this.db._decodeKey(options.gt),
-      gte: this.db._decodeKey(options.gte),
+      lt: this.db._decodeKey(this._options.lt),
+      lte: this.db._decodeKey(this._options.lte),
+      gt: this.db._decodeKey(this._options.gt),
+      gte: this.db._decodeKey(this._options.gte),
     } as EasierLevelDOWNIteratorOpts<K, V>)
   }
 
