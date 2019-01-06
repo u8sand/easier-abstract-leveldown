@@ -47,10 +47,14 @@ export class EasierAbstractLevelDOWNIterator<
 
             if (this._options.keyAsBuffer && !Buffer.isBuffer(key))
               key = Buffer.from(String(key))
+            else if (!this._options.keyAsBuffer)
+              key = String(key)
 
             let val = this.db._encodeValue(value.value)
             if (this._options.valueAsBuffer && !Buffer.isBuffer(val))
               val = Buffer.from(String(val))
+            else if (!this._options.valueAsBuffer)
+              val = String(val)
 
             process.nextTick(callback, null, key, val)
           } else {
