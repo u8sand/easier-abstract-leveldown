@@ -2,6 +2,7 @@ import { AbstractLevelDOWN } from "abstract-leveldown"
 import { EasierLevelDOWN, EasierLevelDOWNBatchOpts, EasierLevelDOWNEmitter, EasierLevelDOWNIteratorOpts, MaybeLocation } from "./abstract"
 import { ErrorCallbackToPromise, ErrorCallbackToPromiseA1, ErrorCallbackToPromiseA2, ErrorKeyValueCallbackToPromise, ErrorValueCallbackToPromiseA1 } from "./callback-promise"
 import { KeyVal, StringOrBuffer } from "./types"
+import uuidv4 from 'uuid/v4'
 
 /**
  * LevelDOWNEasier helps us treat an existing AbstractLevelDOWN compliant store as an EasierLevelDOWN one!
@@ -10,7 +11,6 @@ import { KeyVal, StringOrBuffer } from "./types"
 export class LevelDOWNEasier<K extends StringOrBuffer, V = any, O extends MaybeLocation = any> implements EasierLevelDOWN<K, V, O> {
   _leveldown: AbstractLevelDOWN<K, V>
 
-  post?(v: V): Promise<K>
   changes?(): EasierLevelDOWNEmitter<K, V>
   encodeKey?(key: K): StringOrBuffer
   encodeValue?(value: V): StringOrBuffer
@@ -72,6 +72,12 @@ export class LevelDOWNEasier<K extends StringOrBuffer, V = any, O extends MaybeL
 
   put(k: K, v: V): Promise<void> {
     return ErrorCallbackToPromiseA2(this._leveldown.put.bind(this._leveldown), k, v)
+  }
+
+  async post(val: V): Promise<K> {
+    const key = uuidv4() as K
+    await this.put(key, val)
+    return key
   }
 
   del(k: K): Promise<void> {
