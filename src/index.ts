@@ -4,7 +4,7 @@ import { EasierAbstractLevelDOWN } from './leveldown'
 export * from './abstract'
 export * from './leveldown'
 export * from './passthrough'
-export * from './reverse'
+export * from './leveldown-easier'
 
 export function exposeLevelDOWN<
   K, V, O extends MaybeLocation = any
