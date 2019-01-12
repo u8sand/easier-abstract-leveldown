@@ -5,6 +5,7 @@ export * from './abstract'
 export * from './leveldown'
 export * from './passthrough'
 export * from './leveldown-easier'
+export * from './levelup-easier'
 
 export function exposeLevelDOWN<
   K, V, O extends MaybeLocation = any

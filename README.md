@@ -6,6 +6,10 @@ A convenient wrapper of Abstract LevelDOWN for those who like TypeScript / ESnex
   - `expose` now takes a factory function
     - `Cls` -> `() => new Cls()`
 
+## Major additions
+- `^1.2.0`: LevelUpEasier lets you treat a LevelUp as an EasierLevelDOWN
+- `^1.1.0`: LevelDOWNEasier lets you treat a LevelDOWN as an EasierLevelDOWN
+
 ## Discussion
 Things are made as straightforward as possible, anything non-integral can be ommitted and will be taken care of.
 - batch operations automatically get mapped to just calling each operation in a loop

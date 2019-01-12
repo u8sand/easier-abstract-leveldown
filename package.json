@@ -1,6 +1,6 @@
 {
   "name": "easier-abstract-leveldown",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "An easier abstract leveldown",
   "author": "Daniel J. B. Clarke <u8sand@gmail.com>",
   "license": "MIT",
@@ -24,11 +24,13 @@
   "dependencies": {
     "@types/uuid": "^3.4.4",
     "abstract-leveldown": "^6.0.0",
+    "levelup": "^4.0.0",
     "ltgt": "^2.2.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/abstract-leveldown": "^5.0.1",
+    "@types/levelup": "^3.1.0",
     "@types/memdown": "^3.0.0",
     "@types/node": "^10.12.18",
     "@types/tape": "^4.2.33",
